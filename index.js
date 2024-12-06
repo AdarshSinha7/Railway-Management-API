@@ -5,7 +5,10 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { PrismaClient } = prisma;
 const prismaClient = new PrismaClient();
+
 require('dotenv').config();
+
+
 
 app.use(express.json());
 
@@ -58,7 +61,7 @@ app.post("/login", async (req, res) => {
   res.json({ token });
 });
 
-// Admin: Add Train
+// Admin for Adding Train
 app.post("/admin/train", async (req, res) => {
   const { source, destination, totalSeats } = req.body;
   const apiKey = req.headers["api-key"];
@@ -77,7 +80,7 @@ app.post("/admin/train", async (req, res) => {
   }
 });
 
-// Get Train Availability
+// Getting the Train Availability
 app.get("/train/availability", async (req, res) => {
   const { source, destination } = req.query;
   
@@ -88,7 +91,7 @@ app.get("/train/availability", async (req, res) => {
   res.json(trains);
 });
 
-// Book a Seat
+// Booking a Seat
 app.post("/book", authenticateToken, async (req, res) => {
   const { trainId, seats } = req.body;
   const { userId } = req.user;
@@ -132,7 +135,7 @@ app.get("/book/:id", authenticateToken, async (req, res) => {
   res.json(booking);
 });
 
-// Start server
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
